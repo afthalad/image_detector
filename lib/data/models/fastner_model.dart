@@ -7,6 +7,7 @@ class Fastener {
   double threadDiam;
   double headDiam;
   dynamic fastnerId;
+  dynamic pennyType;
 
   Fastener({
     required this.status,
@@ -16,6 +17,7 @@ class Fastener {
     required this.threadLength,
     required this.threadDiam,
     required this.headDiam,
+    required this.pennyType,
     this.fastnerId,
   });
 
@@ -30,6 +32,7 @@ class Fastener {
       threadDiam: json['thread_diam'].toDouble(),
       headDiam: json['head_diam'].toDouble(),
       fastnerId: json['fastner_id'],
+      pennyType: json['penny_type'],
     );
   }
 

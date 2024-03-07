@@ -53,6 +53,8 @@ class CustomPopup extends StatelessWidget {
         Text('Thread Diameter: ${data["thread_diam"]}'),
         const Gap(5),
         Text('Head Diameter: ${data["head_diam"]}'),
+        const Gap(5),
+        Text('Penny type: ${data["penny_type"]}'),
         const Gap(10),
         const Text(
           'Head Types:',

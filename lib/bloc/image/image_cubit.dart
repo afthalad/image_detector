@@ -18,7 +18,7 @@ class ImageCubit extends Cubit<ImageState> {
     if (imageB64.isEmpty) {
       return;
     }
-
+    print(imageB64.length);
     emit(LoadingState());
     var id = Random().nextInt(100);
     var existId = AppPreferences.getInt("id");
