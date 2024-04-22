@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 import 'dart:io';
 import 'dart:convert';
+import 'package:fastner_detector/presentation/screens/screw_select_screen.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
@@ -103,7 +104,25 @@ class _SecondScreenState extends State<SecondScreen> {
           child: BlocConsumer<ImageCubit, ImageState>(
             listener: (context, state) {
               if (state is SecondImageSuccess) {
-                state.data != null ? poppu(state.data) : null;
+                state.data['fastner_name'] == "washer"
+                    ? poppu(state.data)
+                    :
+                    // state.data != null ? poppu(state.data) : null;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ScrewSelectScreen(
+                            headTypes: state.data['head_types']
+                                .map((item) => item[0])
+                                .toList(),
+                            threadTypes: state.data["thread_types"],
+                            meterials: state.data["meterials"],
+                            screwLength: state.data["screw_length"],
+                            threadLength: state.data["thread_length"],
+                            threadDiam: state.data["thread_diam"],
+                          ),
+                        ),
+                      );
               }
             },
             builder: (context, state) {

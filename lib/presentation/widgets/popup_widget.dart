@@ -63,12 +63,13 @@ class CustomPopup extends StatelessWidget {
           ),
         ),
         const Gap(5),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: (data["head_type"] as List).map((head) {
-            return Text('${head[0]}: ${head[1]}%');
-          }).toList(),
-        ),
+
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: (data["head_type"] as List).map((head) {
+        //     return Text('${head[0]}: ${head[1]}%');
+        //   }).toList(),
+        // ),
       ],
     );
   }

@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
           ),
           home: const SplashScreen(),
           initialRoute: AppRoutes.splashScreen,
+          // initialRoute: AppRoutes.screwSelectScreen,
           routes: AppRoutes.routes,
         ),
       ),

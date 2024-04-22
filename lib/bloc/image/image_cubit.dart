@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../data/repositories/image_repsitory.dart';
 import '../../core/utils/helpers/app_preferences.dart';
@@ -18,7 +19,7 @@ class ImageCubit extends Cubit<ImageState> {
     if (imageB64.isEmpty) {
       return;
     }
-    print(imageB64.length);
+    // print(imageB64.length);
     emit(LoadingState());
     var id = Random().nextInt(100);
     var existId = AppPreferences.getInt("id");
@@ -53,6 +54,43 @@ class ImageCubit extends Cubit<ImageState> {
         await Future.delayed(const Duration(seconds: 1));
         AppPreferences.clear();
         emit(ImageInitial());
+      }
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
+
+  Future<void> step3Requester(
+    headType,
+    threadType,
+    material,
+    screwLength,
+    threadLength,
+    threadDiam,
+  ) async {
+    emit(LoadingState());
+    print(headType);
+    print(threadType);
+    print(material);
+    print(screwLength);
+    print(threadLength);
+    print(threadDiam);
+    FormData formData = FormData.fromMap({
+      'request_id': AppPreferences.getInt("id"),
+      'head_type': headType,
+      'thread_type': threadType,
+      'meterial': material,
+      "screw_length": screwLength,
+      "thread_length": threadLength,
+      "thread_diam": threadDiam,
+    });
+    try {
+      final response = await imageRepository.requester(formData);
+      final responseStatusCode = response.statusCode;
+      var data = response.data;
+      print(response);
+      if (responseStatusCode == 200) {
+        await launchUrl(Uri.parse(data["url"]));
       }
     } catch (e) {
       emit(ErrorState());

@@ -2,6 +2,8 @@ class Fastener {
   String status;
   String fastenerName;
   List<List<dynamic>> headType;
+  List<String> threadTypes;
+  List<String> meterials;
   double screwLength;
   double threadLength;
   double threadDiam;
@@ -13,6 +15,8 @@ class Fastener {
     required this.status,
     required this.fastenerName,
     required this.headType,
+    required this.meterials,
+    required this.threadTypes,
     required this.screwLength,
     required this.threadLength,
     required this.threadDiam,
@@ -27,6 +31,8 @@ class Fastener {
       fastenerName: json['fastner_name'],
       headType: List<List<dynamic>>.from(
           json['head_type'].map((type) => List<dynamic>.from(type))),
+      threadTypes: json['thread_types'],
+      meterials: json['meterials'],
       screwLength: json['screw_length'].toDouble(),
       threadLength: json['thread_length'].toDouble(),
       threadDiam: json['thread_diam'].toDouble(),
