@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:gap/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import '../../core/configs/routes.dart';
 import '../../bloc/image/image_cubit.dart';
@@ -38,6 +37,19 @@ class _ScrewSelectScreenState extends State<ScrewSelectScreen> {
   String material = "";
   int select = 1;
   bool recommandSelected = false;
+  showCustomSnackBar() {
+    var snackBar = SnackBar(
+      behavior: SnackBarBehavior.floating,
+      showCloseIcon: true,
+      backgroundColor: Colors.red.shade600,
+      content: const Text(
+        'Please select all the required types',
+      ),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+      snackBar,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -288,24 +300,30 @@ class _ScrewSelectScreenState extends State<ScrewSelectScreen> {
                       backgroundColor: Colors.black,
                       state: state,
                       onClick: () {
-                        context
-                            .read<ImageCubit>()
-                            .step3Requester(
-                              headType,
-                              threadType,
-                              material,
-                              widget.screwLength,
-                              widget.threadLength,
-                              widget.threadDiam,
-                            )
-                            .whenComplete(
-                          () {
-                            sleep(const Duration(seconds: 1));
-
-                            Navigator.pushReplacementNamed(
-                                context, AppRoutes.homeScreen);
-                          },
-                        );
+                        if (headType == "" ||
+                            threadType == "" ||
+                            material == "") {
+                          showCustomSnackBar();
+                        } else {
+                          context
+                              .read<ImageCubit>()
+                              .step3Requester(
+                                headType,
+                                threadType,
+                                material,
+                                widget.screwLength,
+                                widget.threadLength,
+                                widget.threadDiam,
+                              )
+                              .whenComplete(
+                            () {
+                              sleep(const Duration(seconds: 1));
+                              context.read<ImageCubit>().reset();
+                              Navigator.pushReplacementNamed(
+                                  context, AppRoutes.homeScreen);
+                            },
+                          );
+                        }
                       },
                     );
                   },
